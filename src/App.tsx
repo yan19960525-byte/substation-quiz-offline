@@ -281,8 +281,8 @@ function normalizeType(value: unknown): QuestionType | null {
 
 function judgmentAnswer(value: unknown): "TRUE" | "FALSE" | null {
   const text = String(value ?? "").trim().toLowerCase();
-  if (["正确", "对", "√", "true", "1"].includes(text)) return "TRUE";
-  if (["错误", "错", "×", "x", "false", "0"].includes(text)) return "FALSE";
+  if (["a", "正确", "对", "√", "true", "1"].includes(text)) return "TRUE";
+  if (["b", "错误", "错", "×", "x", "false", "0"].includes(text)) return "FALSE";
   return null;
 }
 
