@@ -1,4 +1,4 @@
-const CACHE_NAME = "beiti-local-v1";
+const CACHE_NAME = "beiti-local-v2-3";
 const BASE_PATH = new URL("./", self.location.href).pathname;
 const CORE_FILES = [BASE_PATH, `${BASE_PATH}manifest.webmanifest`, `${BASE_PATH}icon-192.png`, `${BASE_PATH}icon-512.png`];
 
