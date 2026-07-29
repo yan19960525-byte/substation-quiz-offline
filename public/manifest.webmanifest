@@ -1,0 +1,16 @@
+{
+  "name": "变电站背题",
+  "short_name": "背题",
+  "description": "仅在设备本地运行的变电站自动化题库练习工具",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f2f6fa",
+  "theme_color": "#f2f6fa",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
