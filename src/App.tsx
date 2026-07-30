@@ -67,6 +67,10 @@ type SessionAnswer = {
 type Screen = "home" | "quiz" | "result";
 type SwipeAnimation = "exit-next" | "exit-previous" | "enter-next" | "enter-previous";
 
+type AndroidBridge = {
+  saveTextFile: (filename: string, content: string) => void;
+};
+
 const DB_NAME = "local-question-trainer-v2";
 const LEGACY_DB_NAME = "local-question-trainer";
 const STORE_NAME = "app-state";
@@ -432,7 +436,8 @@ export default function Home() {
       .catch(() => setNotice("本地记录读取失败，本次仍可继续使用。"))
       .finally(() => setHydrated(true));
 
-    if ("serviceWorker" in navigator) {
+    const nativeAppHosts = new Set(["appassets.androidplatform.net", "app.local"]);
+    if ("serviceWorker" in navigator && !nativeAppHosts.has(window.location.hostname)) {
       const serviceWorkerUrl = new URL("sw.js", window.location.href);
       const scope = new URL("./", window.location.href).pathname;
       navigator.serviceWorker.register(serviceWorkerUrl, { scope }).catch(() => undefined);
@@ -701,11 +706,20 @@ export default function Home() {
   }
 
   function exportBackup() {
-    const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+    const content = JSON.stringify(state, null, 2);
+    const filename = `背题软件第二版备份-${new Date().toISOString().slice(0, 10)}.json`;
+    const androidBridge = (window as Window & { AndroidBridge?: AndroidBridge }).AndroidBridge;
+    if (androidBridge) {
+      androidBridge.saveTextFile(filename, content);
+      setNotice(`请选择保存位置，备份包含 ${state.banks.length} 份题库。`);
+      return;
+    }
+
+    const blob = new Blob([content], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `背题软件第二版备份-${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = filename;
     link.click();
     URL.revokeObjectURL(url);
     setNotice(`备份已导出，包含 ${state.banks.length} 份题库。`);
@@ -923,11 +937,6 @@ export default function Home() {
 
   return (
     <main className={`app-shell home-shell font-${state.settings.fontSize}`}>
-      <header className="minimal-header">
-        <h1>变电站背题</h1>
-        <span>第二版 · 仅本地</span>
-      </header>
-
       <nav className="home-tabs" aria-label="主要功能">
         <button className={homeTab === "study" ? "active" : ""} onClick={() => setHomeTab("study")}>答题</button>
         <button className={homeTab === "library" ? "active" : ""} onClick={() => setHomeTab("library")}>题库</button>

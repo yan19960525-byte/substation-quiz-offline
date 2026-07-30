@@ -37,6 +37,11 @@ button:focus-visible, input:focus-visible { outline: 3px solid rgba(52, 140, 233
   background: #fff;
 }
 
+.home-shell {
+  display: flex;
+  flex-direction: column;
+}
+
 .loading-screen {
   min-height: 100vh;
   display: grid;
@@ -58,21 +63,11 @@ button:focus-visible, input:focus-visible { outline: 3px solid rgba(52, 140, 233
   font-weight: 800;
 }
 
-.minimal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 0 20px;
-}
-
-.minimal-header h1 { margin: 0; font-size: 22px; letter-spacing: -0.03em; }
-.minimal-header span { color: var(--muted); font-size: 12px; }
-
 .home-tabs {
   width: min(100%, 330px);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin: 0 auto 30px;
+  margin: 10px auto 30px;
   border: 1px solid #222;
   border-radius: 7px;
   overflow: hidden;
@@ -187,9 +182,23 @@ button:focus-visible, input:focus-visible { outline: 3px solid rgba(52, 140, 233
 .font-options button { height: 36px; border: 0; border-right: 1px solid #bbb; background: #fff; cursor: pointer; }
 .font-options button:last-child { border-right: 0; }
 .font-options button.active { color: #fff; background: #222; }
-.delay-options { grid-template-columns: repeat(2, 50px); }
+.delay-options { grid-template-columns: repeat(2, 62px); }
+.delay-options button {
+  padding: 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
 
-.privacy-note { margin-top: 42px; color: #aaa; font-size: 12px; text-align: center; }
+.privacy-note {
+  margin: auto 0 0;
+  padding-top: 42px;
+  color: #aaa;
+  font-size: 12px;
+  text-align: center;
+}
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .quiz-shell {
